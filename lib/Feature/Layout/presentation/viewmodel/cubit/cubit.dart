@@ -28,7 +28,7 @@ class LayoutCubit extends Cubit<LayoutState> {
   }
 
   createTable() async {
-    Database database = await openDatabase(
+    await openDatabase(
       'ToDo.db',
       version: 1,
       onCreate: (db, version) {
