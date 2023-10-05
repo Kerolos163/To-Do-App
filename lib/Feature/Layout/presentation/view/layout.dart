@@ -9,7 +9,7 @@ class LayoutScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => LayoutCubit(),
+      create: (context) => LayoutCubit()..createTable(),
       child: BlocBuilder<LayoutCubit, LayoutState>(
         builder: (context, state) {
           return Scaffold(
