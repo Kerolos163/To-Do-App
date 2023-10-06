@@ -20,7 +20,9 @@ class LayoutScreen extends StatelessWidget {
             body: LayoutCubit.get(context)
                 .screens[LayoutCubit.get(context).currentIndex],
             floatingActionButton: FloatingActionButton(
-              onPressed: () {},
+              onPressed: () {
+                LayoutCubit.get(context).insertToDataBase();
+              },
               child: const Icon(Icons.add),
             ),
             bottomNavigationBar: BottomNavigationBar(

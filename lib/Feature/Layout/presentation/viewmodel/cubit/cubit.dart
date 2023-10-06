@@ -27,8 +27,9 @@ class LayoutCubit extends Cubit<LayoutState> {
     emit(ChangeIndexLayoutState());
   }
 
+  late Database database;
   createTable() async {
-    await openDatabase(
+    database = await openDatabase(
       'ToDo.db',
       version: 1,
       onCreate: (db, version) {
@@ -46,5 +47,18 @@ class LayoutCubit extends Cubit<LayoutState> {
         log("Open Table");
       },
     );
+  }
+
+  insertToDataBase() async {
+    await database.transaction((txn) async{
+      txn
+          .rawInsert(
+              'INSERT INTO Test(title, date, time, status) VALUES("First Task", "22/12","10:30","new")')
+          .then((value) {
+        log("$value inserted successfuly");
+      }).catchError((error) {
+        log("Error When Creating Table $error");
+      });
+    });
   }
 }
