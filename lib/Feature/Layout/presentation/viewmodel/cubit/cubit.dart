@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sqflite/sqflite.dart';
 import '../../../../ArchivedTasks/presentaion/view/ArchivedTask.dart';
@@ -22,9 +23,16 @@ class LayoutCubit extends Cubit<LayoutState> {
     const DoneTask(),
     const ArchivedTask(),
   ];
+  var scaffoldKey = GlobalKey<ScaffoldState>();
+  bool isBottomSheetShow = false;
   changeCurrentIndex({required int newIndex}) {
     currentIndex = newIndex;
     emit(ChangeIndexLayoutState());
+  }
+
+  changeBottonSheetIcon({required bool value}) {
+    isBottomSheetShow = value;
+    emit(ChangeIconBottomSheetState());
   }
 
   late Database database;
@@ -50,7 +58,7 @@ class LayoutCubit extends Cubit<LayoutState> {
   }
 
   insertToDataBase() async {
-    await database.transaction((txn) async{
+    await database.transaction((txn) async {
       txn
           .rawInsert(
               'INSERT INTO Test(title, date, time, status) VALUES("First Task", "22/12","10:30","new")')
