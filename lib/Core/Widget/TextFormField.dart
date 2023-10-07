@@ -11,7 +11,7 @@ class TextFormFiled extends StatelessWidget {
     this.onChanged,
     this.onSaved,
     this.onTap,
-    this.keyboardType,
+    this.keyboardType, this.isClickable,
   });
   final String? Function(String?)? validator;
   final String label;
@@ -22,10 +22,12 @@ class TextFormFiled extends StatelessWidget {
   final void Function(String?)? onSaved;
   final void Function()? onTap;
   final TextInputType? keyboardType;
+  final bool? isClickable;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       keyboardType: keyboardType,
+      enabled: isClickable,
       validator: validator,
       controller: controller,
       onChanged: onChanged,

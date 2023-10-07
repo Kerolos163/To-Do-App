@@ -24,6 +24,10 @@ class LayoutCubit extends Cubit<LayoutState> {
     const ArchivedTask(),
   ];
   var scaffoldKey = GlobalKey<ScaffoldState>();
+  final formKey = GlobalKey<FormState>();
+  late TextEditingController titleController ;
+  late TextEditingController timeController ;
+  late TextEditingController dateController ;
   bool isBottomSheetShow = false;
   changeCurrentIndex({required int newIndex}) {
     currentIndex = newIndex;
@@ -57,7 +61,11 @@ class LayoutCubit extends Cubit<LayoutState> {
     );
   }
 
-  insertToDataBase() async {
+  insertToDataBase({
+    required String title,
+    required String date,
+    required String time,
+  }) async {
     await database.transaction((txn) async {
       txn
           .rawInsert(
