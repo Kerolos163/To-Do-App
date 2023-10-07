@@ -25,9 +25,9 @@ class LayoutCubit extends Cubit<LayoutState> {
   ];
   var scaffoldKey = GlobalKey<ScaffoldState>();
   final formKey = GlobalKey<FormState>();
-  late TextEditingController titleController ;
-  late TextEditingController timeController ;
-  late TextEditingController dateController ;
+  late TextEditingController titleController;
+  late TextEditingController timeController;
+  late TextEditingController dateController;
   bool isBottomSheetShow = false;
   changeCurrentIndex({required int newIndex}) {
     currentIndex = newIndex;
@@ -40,6 +40,7 @@ class LayoutCubit extends Cubit<LayoutState> {
   }
 
   late Database database;
+  List<Map> myList = [];
   createTable() async {
     database = await openDatabase(
       'ToDo.db',
@@ -57,11 +58,16 @@ class LayoutCubit extends Cubit<LayoutState> {
       },
       onOpen: (db) {
         log("Open Table");
+        getFromDataBase(database: db).then((value) {
+          myList = value;
+          print(myList);
+          emit(GetDataLayoutState());
+        });
       },
     );
   }
 
-  insertToDataBase({
+  Future insertToDataBase({
     required String title,
     required String date,
     required String time,
@@ -76,5 +82,10 @@ class LayoutCubit extends Cubit<LayoutState> {
         log("Error When Creating Table $error");
       });
     });
+  }
+
+  Future<List<Map>> getFromDataBase({required Database database}) async {
+    List<Map> list = await database.rawQuery('SELECT * FROM Test');
+    return list;
   }
 }

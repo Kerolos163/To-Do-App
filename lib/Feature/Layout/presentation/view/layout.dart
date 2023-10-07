@@ -30,20 +30,29 @@ class LayoutScreen extends StatelessWidget {
                       .formKey
                       .currentState!
                       .validate()) {
-                    LayoutCubit.get(context).insertToDataBase(
-                        title: LayoutCubit.get(context).titleController.text,
-                        date: LayoutCubit.get(context).dateController.text,
-                        time: LayoutCubit.get(context).timeController.text);
-                    Navigator.pop(context);
                     LayoutCubit.get(context)
-                        .changeBottonSheetIcon(value: false);
+                        .insertToDataBase(
+                            title:
+                                LayoutCubit.get(context).titleController.text,
+                            date: LayoutCubit.get(context).dateController.text,
+                            time: LayoutCubit.get(context).timeController.text)
+                        .then((value) {
+                      Navigator.pop(context);
+                      LayoutCubit.get(context)
+                          .changeBottonSheetIcon(value: false);
+                    });
                   }
                 } else {
                   LayoutCubit.get(context)
                       .scaffoldKey
                       .currentState!
                       .showBottomSheet((context) => const BottomSheetScreen(),
-                          elevation: 10);
+                          elevation: 10)
+                      .closed
+                      .then((value) {
+                    LayoutCubit.get(context)
+                        .changeBottonSheetIcon(value: false);
+                  });
                   LayoutCubit.get(context).changeBottonSheetIcon(value: true);
                 }
               },

@@ -5,3 +5,5 @@ class InitialLayoutState extends LayoutState {}
 class ChangeIndexLayoutState extends LayoutState {}
 
 class ChangeIconBottomSheetState extends LayoutState {}
+
+class GetDataLayoutState extends LayoutState {}
