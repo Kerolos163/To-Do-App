@@ -75,8 +75,13 @@ class LayoutCubit extends Cubit<LayoutState> {
     await database.transaction((txn) async {
       txn
           .rawInsert(
-              'INSERT INTO Test(title, date, time, status) VALUES("First Task", "22/12","10:30","new")')
+              'INSERT INTO Test(title, date, time, status) VALUES("$title", "$date","$time","new")')
           .then((value) {
+        getFromDataBase(database: database).then((value) {
+          myList = value;
+          print(myList);
+          emit(GetDataLayoutState());
+        });
         log("$value inserted successfuly");
       }).catchError((error) {
         log("Error When Creating Table $error");

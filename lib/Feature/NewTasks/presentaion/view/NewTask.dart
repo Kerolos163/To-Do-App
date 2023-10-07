@@ -18,7 +18,8 @@ class NewTask extends StatelessWidget {
             return Padding(
               padding: const EdgeInsets.all(10.0),
               child: ListView.separated(
-                  itemBuilder: (context, index) => const TaskItem(),
+                  itemBuilder: (context, index) => TaskItem(
+                      taskmodel: LayoutCubit.get(context).myList[index]),
                   separatorBuilder: (context, index) => const Padding(
                         padding: EdgeInsets.symmetric(vertical: 8),
                         child: Divider(),
