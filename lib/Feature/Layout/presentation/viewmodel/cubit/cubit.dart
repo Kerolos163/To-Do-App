@@ -93,4 +93,14 @@ class LayoutCubit extends Cubit<LayoutState> {
     List<Map> list = await database.rawQuery('SELECT * FROM Test');
     return list;
   }
+
+  updateDataBase({required String state, required int id}) async {
+    database.rawUpdate(
+      'UPDATE Test SET status = ? WHERE id = ?',
+      [state, id],
+    ).then((value) {
+      print(value);
+      emit(UpdateStatusState());
+    });
+  }
 }

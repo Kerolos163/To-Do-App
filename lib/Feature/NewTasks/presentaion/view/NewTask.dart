@@ -19,7 +19,18 @@ class NewTask extends StatelessWidget {
               padding: const EdgeInsets.all(10.0),
               child: ListView.separated(
                   itemBuilder: (context, index) => TaskItem(
-                      taskmodel: LayoutCubit.get(context).myList[index]),
+                        taskmodel: LayoutCubit.get(context).myList[index],
+                        doneTask: () {
+                          LayoutCubit.get(context).updateDataBase(
+                              state: "Done",
+                              id: LayoutCubit.get(context).myList[index]['id']);
+                        },
+                        archived: () {
+                          LayoutCubit.get(context).updateDataBase(
+                              state: "Archive",
+                              id: LayoutCubit.get(context).myList[index]['id']);
+                        },
+                      ),
                   separatorBuilder: (context, index) => const Padding(
                         padding: EdgeInsets.symmetric(vertical: 8),
                         child: Divider(),
