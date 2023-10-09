@@ -107,7 +107,6 @@ class LayoutCubit extends Cubit<LayoutState> {
       'UPDATE Test SET status = ? WHERE id = ?',
       [status, id],
     ).then((value) {
-      print(value);
       getFromDataBase(database: database);
       emit(UpdateStatusState());
     });
