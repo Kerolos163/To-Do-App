@@ -87,6 +87,7 @@ class LayoutCubit extends Cubit<LayoutState> {
     newTaskList = [];
     doneTaskList = [];
     archiveTaskList = [];
+    emit(GetDataLayoutLoadingState());
     database.rawQuery('SELECT * FROM Test').then((value) {
       for (var element in value) {
         if (element["status"] == "new") {
@@ -97,7 +98,7 @@ class LayoutCubit extends Cubit<LayoutState> {
           archiveTaskList.add(element);
         }
       }
-      emit(GetDataLayoutState());
+      emit(GetDataLayoutSuccessState());
     });
   }
 

@@ -1,9 +1,9 @@
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:todoapp/Core/Widget/TaskItem.dart';
-import 'package:todoapp/Feature/Layout/presentation/viewmodel/cubit/cubit.dart';
-import 'package:todoapp/Feature/Layout/presentation/viewmodel/cubit/state.dart';
+import '../../../../Core/Widget/TaskItem.dart';
+import '../../../Layout/presentation/viewmodel/cubit/cubit.dart';
+import '../../../Layout/presentation/viewmodel/cubit/state.dart';
 
 class DoneTask extends StatelessWidget {
   const DoneTask({super.key});
@@ -34,8 +34,20 @@ class DoneTask extends StatelessWidget {
                   itemCount: LayoutCubit.get(context).doneTaskList.length),
             );
           },
-          fallback: (context) =>
-              const Center(child: CircularProgressIndicator()),
+          fallback: (context) {
+            if (state is GetDataLayoutLoadingState) {
+              return const Center(child: CircularProgressIndicator());
+            } else {
+              return Center(
+                child: Image.asset(
+                  "asset/image/no-task.png",
+                  height: 200,
+                  width: 200,
+                  opacity: const AlwaysStoppedAnimation(.75),
+                ),
+              );
+            }
+          },
         );
       },
     );
