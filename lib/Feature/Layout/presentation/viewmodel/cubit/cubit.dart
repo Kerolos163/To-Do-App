@@ -40,7 +40,9 @@ class LayoutCubit extends Cubit<LayoutState> {
   }
 
   late Database database;
-  List<Map> myList = [];
+  List<Map> newTaskList = [];
+  List<Map> doneTaskList = [];
+  List<Map> archiveTaskList = [];
   createTable() async {
     database = await openDatabase(
       'ToDo.db',
@@ -58,11 +60,7 @@ class LayoutCubit extends Cubit<LayoutState> {
       },
       onOpen: (db) {
         log("Open Table");
-        getFromDataBase(database: db).then((value) {
-          myList = value;
-          print(myList);
-          emit(GetDataLayoutState());
-        });
+        getFromDataBase(database: db);
       },
     );
   }
@@ -77,11 +75,7 @@ class LayoutCubit extends Cubit<LayoutState> {
           .rawInsert(
               'INSERT INTO Test(title, date, time, status) VALUES("$title", "$date","$time","new")')
           .then((value) {
-        getFromDataBase(database: database).then((value) {
-          myList = value;
-          print(myList);
-          emit(GetDataLayoutState());
-        });
+        getFromDataBase(database: database);
         log("$value inserted successfuly");
       }).catchError((error) {
         log("Error When Creating Table $error");
@@ -89,17 +83,31 @@ class LayoutCubit extends Cubit<LayoutState> {
     });
   }
 
-  Future<List<Map>> getFromDataBase({required Database database}) async {
-    List<Map> list = await database.rawQuery('SELECT * FROM Test');
-    return list;
+  void getFromDataBase({required Database database}) async {
+    newTaskList = [];
+    doneTaskList = [];
+    archiveTaskList = [];
+    database.rawQuery('SELECT * FROM Test').then((value) {
+      for (var element in value) {
+        if (element["status"] == "new") {
+          newTaskList.add(element);
+        } else if (element["status"] == "Done") {
+          doneTaskList.add(element);
+        } else if (element["status"] == "Archive") {
+          archiveTaskList.add(element);
+        }
+      }
+      emit(GetDataLayoutState());
+    });
   }
 
-  updateDataBase({required String state, required int id}) async {
+  updateDataBase({required String status, required int id}) async {
     database.rawUpdate(
       'UPDATE Test SET status = ? WHERE id = ?',
-      [state, id],
+      [status, id],
     ).then((value) {
       print(value);
+      getFromDataBase(database: database);
       emit(UpdateStatusState());
     });
   }

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class TaskItem extends StatelessWidget {
-  const TaskItem({super.key, required this.taskmodel, this.doneTask, this.archived});
+  const TaskItem(
+      {super.key, required this.taskmodel, this.doneTask, this.archived});
   final Map taskmodel;
   final void Function()? doneTask;
   final void Function()? archived;
@@ -33,23 +34,27 @@ class TaskItem extends StatelessWidget {
             ],
           ),
         ),
-        IconButton(
-          onPressed: doneTask,
-          icon: const Icon(
-            Icons.done,
-            color: Colors.green,
-            size: 30,
-          ),
-        ),
+        doneTask != null
+            ? IconButton(
+                onPressed: doneTask,
+                icon: const Icon(
+                  Icons.done,
+                  color: Colors.green,
+                  size: 30,
+                ),
+              )
+            : Container(),
         const SizedBox(width: 16),
-                IconButton(
-          onPressed: doneTask,
-          icon: const Icon(
-            Icons.archive_rounded,
-            color: Colors.purple,
-            size: 30,
-          ),
-        ),
+        archived != null
+            ? IconButton(
+                onPressed: archived,
+                icon: const Icon(
+                  Icons.archive_rounded,
+                  color: Colors.purple,
+                  size: 30,
+                ),
+              )
+            : Container(),
       ],
     );
   }

@@ -13,29 +13,31 @@ class NewTask extends StatelessWidget {
     return BlocBuilder<LayoutCubit, LayoutState>(
       builder: (context, state) {
         return ConditionalBuilder(
-          condition: LayoutCubit.get(context).myList.isNotEmpty,
+          condition: LayoutCubit.get(context).newTaskList.isNotEmpty,
           builder: (context) {
             return Padding(
               padding: const EdgeInsets.all(10.0),
               child: ListView.separated(
                   itemBuilder: (context, index) => TaskItem(
-                        taskmodel: LayoutCubit.get(context).myList[index],
+                        taskmodel: LayoutCubit.get(context).newTaskList[index],
                         doneTask: () {
                           LayoutCubit.get(context).updateDataBase(
-                              state: "Done",
-                              id: LayoutCubit.get(context).myList[index]['id']);
+                              status: "Done",
+                              id: LayoutCubit.get(context).newTaskList[index]
+                                  ['id']);
                         },
                         archived: () {
                           LayoutCubit.get(context).updateDataBase(
-                              state: "Archive",
-                              id: LayoutCubit.get(context).myList[index]['id']);
+                              status: "Archive",
+                              id: LayoutCubit.get(context).newTaskList[index]
+                                  ['id']);
                         },
                       ),
                   separatorBuilder: (context, index) => const Padding(
                         padding: EdgeInsets.symmetric(vertical: 8),
                         child: Divider(),
                       ),
-                  itemCount: LayoutCubit.get(context).myList.length),
+                  itemCount: LayoutCubit.get(context).newTaskList.length),
             );
           },
           fallback: (context) =>
