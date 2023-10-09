@@ -11,3 +11,5 @@ class GetDataLayoutLoadingState extends LayoutState {}
 class GetDataLayoutSuccessState extends LayoutState {}
 
 class UpdateStatusState extends LayoutState {}
+
+class DeleteFromDataBaseState extends LayoutState {}

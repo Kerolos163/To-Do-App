@@ -26,6 +26,14 @@ class DoneTask extends StatelessWidget {
                               id: LayoutCubit.get(context).doneTaskList[index]
                                   ['id']);
                         },
+                        dismissiblekey: LayoutCubit.get(context)
+                            .doneTaskList[index]['id']
+                            .toString(),
+                        onDismissed: (p0) {
+                          LayoutCubit.get(context).deleteFromDataBase(
+                              id: LayoutCubit.get(context).doneTaskList[index]
+                                  ['id']);
+                        },
                       ),
                   separatorBuilder: (context, index) => const Padding(
                         padding: EdgeInsets.symmetric(vertical: 8),

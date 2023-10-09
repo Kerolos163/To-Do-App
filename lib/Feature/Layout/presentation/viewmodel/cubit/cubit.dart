@@ -111,4 +111,11 @@ class LayoutCubit extends Cubit<LayoutState> {
       emit(UpdateStatusState());
     });
   }
+
+  deleteFromDataBase({required int id}) async {
+    database.rawDelete('DELETE FROM Test WHERE id = ?', [id]).then((value) {
+      getFromDataBase(database: database);
+      emit(DeleteFromDataBaseState());
+    });
+  }
 }

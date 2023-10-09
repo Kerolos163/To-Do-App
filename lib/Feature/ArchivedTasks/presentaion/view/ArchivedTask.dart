@@ -28,6 +28,14 @@ class ArchivedTask extends StatelessWidget {
                               id: LayoutCubit.get(context)
                                   .archiveTaskList[index]['id']);
                         },
+                        dismissiblekey: LayoutCubit.get(context)
+                            .archiveTaskList[index]['id']
+                            .toString(),
+                        onDismissed: (p0) {
+                          LayoutCubit.get(context).deleteFromDataBase(
+                              id: LayoutCubit.get(context).archiveTaskList[index]
+                                  ['id']);
+                        },
                       ),
                   separatorBuilder: (context, index) => const Padding(
                         padding: EdgeInsets.symmetric(vertical: 8),

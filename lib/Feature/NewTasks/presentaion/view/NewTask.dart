@@ -33,6 +33,14 @@ class NewTask extends StatelessWidget {
                               id: LayoutCubit.get(context).newTaskList[index]
                                   ['id']);
                         },
+                        dismissiblekey: LayoutCubit.get(context)
+                            .newTaskList[index]['id']
+                            .toString(),
+                        onDismissed: (p0) {
+                          LayoutCubit.get(context).deleteFromDataBase(
+                              id: LayoutCubit.get(context).newTaskList[index]
+                                  ['id']);
+                        },
                       ),
                   separatorBuilder: (context, index) => const Padding(
                         padding: EdgeInsets.symmetric(vertical: 8),
